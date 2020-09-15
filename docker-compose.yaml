@@ -1,0 +1,24 @@
+version: "3"
+services:
+  app:
+    build: .
+    container_name: task-scheduler
+    restart: always
+    volumes:
+      - ./server:/code/server
+    ports:
+    - 5000:5000
+    environment:
+      - SECRET_KEY=secret
+      - DB_URI=postgresql://postgres:simple_password@db:5432/test
+      - MIN_TASK_SLEEP=5
+      - MAX_TASK_SLEEP=10
+  db:
+    image: postgres:12-alpine
+    container_name: postgres
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_PASSWORD=simple_password
