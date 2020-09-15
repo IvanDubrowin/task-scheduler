@@ -43,17 +43,17 @@ class JobsService:
             raise InvalidStateError
 
         self.scheduler.remove_job(str(job.id))
-        job.update(state=JobState.canceled, end_time=datetime.now())
+        job.update(state=JobState.CANCELED, end_time=datetime.now())
         logger.debug(f'Job {job.id} canceled')
 
     def revoke_jobs_by_group(self, group: JobGroup) -> None:
         """
         Отмена всех заданий группы
         """
-        jobs = Job.query.filter_by(group_id=group.id, state=JobState.running).all()
+        jobs = Job.query.filter_by(group_id=group.id, state=JobState.RUNNING).all()
         for job in jobs:
             self.scheduler.remove_job(str(job.id))
-            job.update(state=JobState.canceled, end_time=datetime.now())
+            job.update(state=JobState.CANCELED, end_time=datetime.now())
             logger.debug(f'Job {job.id} canceled')
 
     @staticmethod
@@ -62,13 +62,13 @@ class JobsService:
         queryset = db.session \
             .query(JobGroup.id, db.func.count(Job.id)) \
             .outerjoin(Job) \
-            .having(Job.state == JobState.running) \
+            .having(Job.state == JobState.RUNNING) \
             .group_by(JobGroup, Job.state) \
             .all()
         for group_id, running_jobs_count in queryset:
             result.append({
                 'job_group_id': group_id,
-                'running_jobs_count': running_jobs_count
+                'running_jobs': running_jobs_count
             })
         return result
 

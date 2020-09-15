@@ -134,3 +134,5 @@ dmypy.json
 /.env
 
 /postgres-data/
+
+/server/test.db

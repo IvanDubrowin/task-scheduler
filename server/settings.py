@@ -1,8 +1,12 @@
 import os
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = os.getenv('DB_URI')
+SECRET_KEY = os.getenv('SECRET_KEY', 'secret')
+
+TEST_DB_PATH = os.path.join(BASE_DIR, 'test.db')
+
+SQLALCHEMY_DATABASE_URI = os.getenv('DB_URI', 'sqlite:///' + TEST_DB_PATH)
 
 MIN_TASK_SLEEP = int(os.getenv('MIN_TASK_SLEEP', 3))
 

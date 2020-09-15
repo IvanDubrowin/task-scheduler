@@ -9,9 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class JobState(str, Enum):
-    running: str = 'running'
-    completed: str = 'completed'
-    canceled: str = 'canceled'
+    RUNNING: str = 'running'
+    COMPLETED: str = 'completed'
+    CANCELED: str = 'canceled'
 
 
 class CRUDMixin:
@@ -66,7 +66,7 @@ class Job(db.Model, CRUDMixin):
     __tablename__ = 'jobs'
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey(JobGroup.id))
-    state = db.Column(db.Enum(JobState), default=JobState.running)
+    state = db.Column(db.Enum(JobState), default=JobState.RUNNING)
     start_time = db.Column(db.DateTime, default=datetime.now)
     end_time = db.Column(db.DateTime, nullable=True)
 
@@ -75,7 +75,7 @@ class Job(db.Model, CRUDMixin):
 
     @property
     def is_stopped(self) -> bool:
-        return self.state in [JobState.canceled, JobState.completed]
+        return self.state in [JobState.CANCELED, JobState.COMPLETED]
 
     @staticmethod
     def is_valid_state(value: Any) -> bool:
@@ -83,7 +83,7 @@ class Job(db.Model, CRUDMixin):
         return value in states
 
     def start(self) -> None:
-        self.update(state=JobState.completed, end_time=datetime.now())
+        self.update(state=JobState.COMPLETED, end_time=datetime.now())
         logger.debug(f'Job {self.id} in state {self.state}')
         scheduler.remove_job(str(self.id))
 

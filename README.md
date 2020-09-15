@@ -16,12 +16,12 @@ state (текущее состояние - running, completed, canceled), start_
 и обновление информации в БД (state=canceled, заполнение end_time)
 
 Endpoints:
-- `POST /tasks/start` {"job_number": <число job-ов>, "job_group": <job_group_id>} - запуск N джобов для группы с идентификатором <job_group_id> (некое целое положительное число)
-- `GET /tasks/groups` - список групп, output: {<job_group_id>: <число джобов в группе со статусом running>}
-- `GET /tasks` - список всех джобов; опционально сделать фильтр для вывода джобов с определенным состоянием (?state=xxx)
-- `GET /tasks/<job_group_id>` - список всех джобов в группе <job_group_id>; опционально сделать фильтр для вывода джобов с определенным состоянием (?state=xxx)
-- `DELETE /tasks/<job_id>` - прерывание джоба с идентификатором <job_id>
-- `DELETE /tasks/group/<job_group_id>` - прерывание запущенных джобов в группе <job_group_id>
+- `POST /tasks/start/` {"job_number": <число job-ов>, "job_group": <job_group_id>} - запуск N джобов для группы с идентификатором <job_group_id> (некое целое положительное число)
+- `GET /tasks/groups/` - список групп, output: {<job_group_id>: <число джобов в группе со статусом running>}
+- `GET /tasks/` - список всех джобов; опционально сделать фильтр для вывода джобов с определенным состоянием (?state=xxx)
+- `GET /tasks/<job_group_id>/` - список всех джобов в группе <job_group_id>; опционально сделать фильтр для вывода джобов с определенным состоянием (?state=xxx)
+- `DELETE /tasks/<job_id>/` - прерывание джоба с идентификатором <job_id>
+- `DELETE /tasks/group/<job_group_id>/` - прерывание запущенных джобов в группе <job_group_id>
 
 Для запуска приложения необходимо установить docker + docker-compose и выполнить команду `docker-compose up` в корневой директории проекта.
 

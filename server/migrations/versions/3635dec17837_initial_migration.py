@@ -1,15 +1,15 @@
 """Initial migration.
 
-Revision ID: 04a927928d0d
+Revision ID: 3635dec17837
 Revises: 
-Create Date: 2020-09-15 08:53:02.158676
+Create Date: 2020-09-15 21:23:20.906839
 
 """
 import sqlalchemy as sa
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = '04a927928d0d'
+revision = '3635dec17837'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,12 +24,11 @@ def upgrade():
     op.create_table('jobs',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('group_id', sa.Integer(), nullable=True),
-    sa.Column('state', sa.Enum('running', 'completed', 'canceled', name='jobstate'), nullable=True),
+    sa.Column('state', sa.Enum('RUNNING', 'COMPLETED', 'CANCELED', name='jobstate'), nullable=True),
     sa.Column('start_time', sa.DateTime(), nullable=True),
     sa.Column('end_time', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['group_id'], ['job_groups.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
+    sa.PrimaryKeyConstraint('id'))
     # ### end Alembic commands ###
 
 

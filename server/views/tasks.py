@@ -10,7 +10,7 @@ from server.services.tasks import JobsService
 job_service = JobsService.get_instance()
 
 
-@app.route('/tasks/start/<int:job_count>/<int:job_group_id>', methods=['POST'])
+@app.route('/tasks/start/<int:job_count>/<int:job_group_id>/', methods=['POST'])
 def start_jobs(job_count: int, job_group_id: int) -> Tuple[Response, int]:
     """
     запуск N джобов для группы с идентификатором <job_group_id> (некое целое положительное число)
@@ -19,7 +19,7 @@ def start_jobs(job_count: int, job_group_id: int) -> Tuple[Response, int]:
     return jsonify({'success': f'Run {job_count} jobs for group {job_group_id}'}), 201
 
 
-@app.route('/tasks/groups', methods=['GET'])
+@app.route('/tasks/groups/', methods=['GET'])
 def get_job_groups() -> Response:
     """
     список групп, output: {<job_group_id>: <число джобов в группе со статусом running>}
@@ -41,7 +41,7 @@ def get_jobs() -> Response:
     return jsonify([job.to_dict() for job in queryset.all()])
 
 
-@app.route('/tasks/<int:job_group_id>', methods=['GET'])
+@app.route('/tasks/<int:job_group_id>/', methods=['GET'])
 def get_jobs_by_group(job_group_id: int) -> Response:
     """
     список всех джобов в группе <job_group_id>;
@@ -58,7 +58,7 @@ def get_jobs_by_group(job_group_id: int) -> Response:
     return jsonify([job.to_dict() for job in queryset.all()])
 
 
-@app.route('/tasks/<int:job_id>', methods=['DELETE'])
+@app.route('/tasks/<int:job_id>/', methods=['DELETE'])
 def revoke_job(job_id: int) -> Tuple[Response, int]:
     """
     прерывание джоба с идентификатором <job_id>
@@ -71,7 +71,7 @@ def revoke_job(job_id: int) -> Tuple[Response, int]:
         return jsonify({'error': 'Invalid job status'}), 400
 
 
-@app.route('/tasks/group/<int:job_group_id>', methods=['DELETE'])
+@app.route('/tasks/group/<int:job_group_id>/', methods=['DELETE'])
 def revoke_jobs_by_group(job_group_id: int) -> Response:
     """
     прерывание запущенных джобов в группе <job_group_id>
