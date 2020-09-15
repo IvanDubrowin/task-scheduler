@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# task-scheduler
-=======
 **Task-scheduler**
 
 Вэб-приложение flask
@@ -29,5 +26,3 @@ Endpoints:
 Для запуска приложения необходимо установить docker + docker-compose и выполнить команду `docker-compose up` в корневой директории проекта.
 
 Для настройки времени слипа задач можно отредактировать переменные окружения в файле docker-compose.yaml MIN_TASK_SLEEP и MAX_TASK_SLEEP
-
->>>>>>> Add project
